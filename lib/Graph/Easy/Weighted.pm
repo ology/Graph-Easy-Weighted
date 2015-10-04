@@ -2,7 +2,7 @@ package Graph::Easy::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use warnings;
 use strict;
@@ -50,7 +50,8 @@ Readonly my $WEIGHT => 'weight';
         2 => { title => 'C', 0 => 0.5, 2 => 0.5 }, # Vertex C "    2 "
         3 => { title => 'D', 0 => 0.2, 1 => 0.8 }, # Vertex D "    2 "
     },
-    $attr
+    $attr,
+    '%0.2f'
  );
  for my $vertex ( $gw->vertices ) {
     printf "vertex: %s weight=%.2f\n",
