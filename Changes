@@ -1,6 +1,9 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+    - Remove the unneeded new() method.
+
+0.02  2015-10-03
     - Set edge labels for the given attribute.
 
 0.01  2015-10-03
