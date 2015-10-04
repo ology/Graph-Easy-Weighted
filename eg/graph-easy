@@ -34,7 +34,7 @@ for my $row ( @$data ) {
         my $n = $graph->add_node($neighbor);
 
         my $edge = Graph::Easy::Edge->new();
-        $edge->set_attributes( { 'x-weight' => $weight } );
+        $edge->set_attributes( { label => $weight, 'x-weight' => $weight } );
 
         $graph->add_edge( $v, $n, $edge );
 
@@ -53,3 +53,5 @@ for my $v ( $graph->vertices ) {
         printf "\tedge to: %d weight=%d\n", $e->to->name, $e->raw_attributes->{'x-weight'};
     }
 }
+
+print $graph->as_ascii();
