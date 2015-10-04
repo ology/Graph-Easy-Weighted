@@ -1,6 +1,8 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+
+0.03  2015-10-03
     - Remove the unneeded new() method.
 
 0.02  2015-10-03
