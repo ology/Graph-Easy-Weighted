@@ -214,7 +214,7 @@ sub get_cost {
     $attr ||= $WEIGHT;
 
     if ( ref $v eq 'Graph::Easy::Edge' ) {
-        return $v->raw_attributes->{"x-$attr"} || 0;
+        return $v->get_custom_attributes->{"x-$attr"} || 0;
     }
 
     return $self->get_vertex_attribute($v->name, "x-$attr") || 0;
