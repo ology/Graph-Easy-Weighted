@@ -1,6 +1,8 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+    - Enable generic node attribute setting.
+    - Improve documentation.
 
 0.04  2015-10-03
     - Handle an sprintf() format for the edge label.
