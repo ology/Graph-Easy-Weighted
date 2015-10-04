@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Graph::Easy::Weighted;
+
+my $attr = 'probability';
+my $gw = Graph::Easy::Weighted->new();
+$gw->populate(
+    {
+        0 => { title => 'A', 1 => 0.4, 3 => 0.6 }, # Vertex A with 2 edges, weight 1
+        1 => { title => 'B', 0 => 0.3, 2 => 0.7 }, # Vertex B "    2 "
+        2 => { title => 'C', 0 => 0.5, 2 => 0.5 }, # Vertex C "    2 "
+        3 => { title => 'D', 0 => 0.2, 1 => 0.8 }, # Vertex D "    2 "
+    },
+    $attr
+);
+
+for my $vertex ( $gw->vertices ) {
+    printf "%s vertex: %s weight=%.2f\n",
+        $vertex->title, $vertex->name, $gw->get_cost($vertex, $attr);
+    for my $edge ( $gw->edges ) {
+        next if $edge->from->name ne $vertex->name;
+        printf "\tedge to: %s weight=%.2f\n",
+            $edge->to->name, $gw->get_cost($edge, $attr);
+    }
+}
