@@ -22,3 +22,5 @@ for my $vertex ( $gw->vertices ) {
             $edge->to->name, $gw->get_cost($edge, 'weight');
     }
 }
+
+print $gw->as_ascii();
