@@ -86,12 +86,15 @@ Please see L<Graph::Easy/new()> for the possible constructor arguments.
   $gw->populate(\@vectors, $attribute);
   $gw->populate(\%data_points);
   $gw->populate(\%data_points, $attribute);
+  $gw->populate(\%data_points, $attribute, $format);
 
 Populate a graph with weighted nodes.
 
 For arguments, the data can be an arrayref of numeric vectors, a
 C<Math::MatrixReal> object, or a hashref of numeric edge values.  The
 C<attribute> is an optional string name, with the default "weight."
+
+A C<sprintf> format string may be provided for the node label.
 
 Examples of vertices in array reference form:
 
@@ -108,7 +111,7 @@ the overall dimension.
 =cut
 
 sub populate {
-    my ($self, $data, $attr) = @_;
+    my ($self, $data, $attr, $format) = @_;
 
     # Set the default attribute.
     $attr ||= $WEIGHT;
@@ -119,7 +122,7 @@ sub populate {
     if ($data_ref eq 'ARRAY' || $data_ref eq 'Math::Matrix') {
         my $vertex = 0;
         for my $neighbors (@$data) {
-            $self->_from_array( $vertex, $neighbors, $attr );
+            $self->_from_array( $vertex, $neighbors, $attr, $format );
             $vertex++;
         }
     }
@@ -129,7 +132,7 @@ sub populate {
                 my $title = delete $data->{$vertex}{title};
                 $self->set_vertex_attribute($vertex, 'title', $title);
             }
-            $self->_from_hash( $vertex, $data->{$vertex}, $attr );
+            $self->_from_hash( $vertex, $data->{$vertex}, $attr, $format );
         }
     }
     else {
@@ -138,16 +141,21 @@ sub populate {
 }
 
 sub _from_array {
-    my ($self, $vertex, $neighbors, $attr) = @_;
+    my ($self, $vertex, $neighbors, $attr, $format) = @_;
 
     my $vertex_weight = 0;
 
     for my $n (0 .. @$neighbors - 1) {
         my $w = $neighbors->[$n]; # Weight of the edge to the neighbor.
-        next unless $w; # TODO Skip zero weight nodes if requested?
+        next unless $w;
 
         my $edge = Graph::Easy::Edge->new();
-        $edge->set_attributes({ label => $w, "x-$attr" => $w });
+        $edge->set_attributes(
+            {
+                label     => $format ? sprintf( $format, $w ) : $w,
+                "x-$attr" => $w,
+            }
+        );
 
         $self->add_edge($vertex, $n, $edge);
 
@@ -158,7 +166,7 @@ sub _from_array {
 }
 
 sub _from_hash {
-    my ($self, $vertex, $neighbors, $attr) = @_;
+    my ($self, $vertex, $neighbors, $attr, $format) = @_;
 
     my $vertex_weight = 0;
 
@@ -166,7 +174,12 @@ sub _from_hash {
         my $w = $neighbors->{$n}; # Weight of the edge to the neighbor.
 
         my $edge = Graph::Easy::Edge->new();
-        $edge->set_attributes({ label => $w, "x-$attr" => $w });
+        $edge->set_attributes(
+            {
+                label     => $format ? sprintf( $format, $w ) : $w,
+                "x-$attr" => $w,
+            }
+        );
 
         $self->add_edge($vertex, $n, $edge);
 
