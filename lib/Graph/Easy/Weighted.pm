@@ -2,7 +2,7 @@ package Graph::Easy::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use warnings;
 use strict;
@@ -77,15 +77,6 @@ as documented, but with the addition of custom weighting.
 Return a new C<Graph::Easy::Weighted> object.
 
 Please see L<Graph::Easy/new()> for the possible constructor arguments.
-
-=cut
-
-sub new {
-    my $class = shift;
-    my $self = $class->SUPER::new();
-    bless $self, $class;
-    return $self;
-}
 
 =head2 populate()
 
