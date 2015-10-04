@@ -5,25 +5,26 @@ use warnings;
 
 use Graph::Easy::Weighted;
 
-my $attr = 'probability';
+my $attr = 'rand';
 my $gw = Graph::Easy::Weighted->new();
 $gw->populate(
     {
-        W => { X => 0.4, Z => 0.6 }, # Vertex W with 2 edges, weight 1
-        X => { W => 0.3, Y => 0.7 }, # Vertex X "    2 "
-        Y => { W => 0.5, Y => 0.5 }, # Vertex Y "    2 "
-        Z => { W => 0.2, X => 0.8 }, # Vertex Z "    2 "
+        W => { X => rand, Z => rand }, # Vertex W with 2 edges, weight 1
+        X => { W => rand, Y => rand }, # Vertex X "    2 "
+        Y => { W => rand, Y => rand }, # Vertex Y "    2 "
+        Z => { W => rand, X => rand }, # Vertex Z "    2 "
     },
-    $attr
+    $attr,
+    '%0.2f'
 );
 
 for my $vertex ( $gw->vertices ) {
-    printf "vertex: %s weight=%.2f\n",
-        $vertex->name, $gw->get_cost($vertex, $attr);
+    printf "vertex: %s %s=%s\n",
+        $vertex->name, $attr, $gw->get_cost($vertex, $attr);
     for my $edge ( $gw->edges ) {
         next if $edge->from->name ne $vertex->name;
-        printf "\tedge to: %s weight=%.2f\n",
-            $edge->to->name, $gw->get_cost($edge, $attr);
+        printf "\tedge to: %s %s=%s\n",
+            $edge->to->name, $attr, $gw->get_cost($edge, $attr);
     }
 }
 
