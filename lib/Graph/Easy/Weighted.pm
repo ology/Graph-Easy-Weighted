@@ -45,21 +45,21 @@ Readonly my $WEIGHT => 'weight';
  $gw = Graph::Easy::Weighted->new();
  $gw->populate(
     {
-        0 => { title => 'A', 1 => 0.4, 3 => 0.6 }, # Vertex A with 2 edges, weight 1
-        1 => { title => 'B', 0 => 0.3, 2 => 0.7 }, # Vertex B "    2 "
-        2 => { title => 'C', 0 => 0.5, 2 => 0.5 }, # Vertex C "    2 "
-        3 => { title => 'D', 0 => 0.2, 1 => 0.8 }, # Vertex D "    2 "
+        0 => { attributes => { title => 'A' }, 1 => 0.4, 3 => 0.6 },
+        1 => { attributes => { title => 'B' }, 0 => 0.3, 2 => 0.7 },
+        2 => { attributes => { title => 'C' }, 0 => 0.5, 2 => 0.5 },
+        3 => { attributes => { title => 'D' }, 0 => 0.2, 1 => 0.8 },
     },
     $attr,
     '%0.2f'
  );
  for my $vertex ( $gw->vertices ) {
-    printf "vertex: %s weight=%.2f\n",
-        $vertex->name, $gw->get_cost($vertex, $attr);
+    printf "%s vertex: %s %s=%s\n",
+        $vertex->title, $vertex->name, $attr, $gw->get_cost($vertex, $attr);
     for my $edge ( $gw->edges ) {
         next if $edge->from->name ne $vertex->name;
-        printf "\tedge to: %s weight=%.2f\n",
-            $edge->to->name, $gw->get_cost($edge, $attr);
+        printf "\tedge to: %s %s=%s\n",
+            $edge->to->name, $attr, $gw->get_cost($edge, $attr);
     }
  }
 
@@ -85,17 +85,24 @@ Please see L<Graph::Easy/new()> for the possible constructor arguments.
   $gw->populate($matrix, $attribute);
   $gw->populate(\@vectors);
   $gw->populate(\@vectors, $attribute);
-  $gw->populate(\%data_points);
-  $gw->populate(\%data_points, $attribute);
-  $gw->populate(\%data_points, $attribute, $format);
+  $gw->populate(\%data);
+  $gw->populate(\%data, $attribute);
+  $gw->populate(\%data, $attribute, $format);
 
 Populate a graph with weighted nodes.
 
-For arguments, the data can be an arrayref of numeric vectors, a
-C<Math::MatrixReal> object, or a hashref of numeric edge values.  The
-C<attribute> is an optional string name, with the default "weight."
+The data can be an arrayref of numeric vectors, a C<Math::MatrixReal> object, or
+a hashref of numeric edge values.
 
-A C<sprintf> format string may be provided for the node label.
+Data given as a hash reference may contain node attributes as shown in the
+SYNOPSIS.  See L<Graph::Easy::Manual> for the available attributes.
+
+The optional edge C<attribute> argument is a string, with the default "weight."
+
+Multiple attributes may populate a single graph, thereby layering and increasing
+the overall dimension.
+
+An optional C<sprintf> format string may be provided for the edge label.
 
 Examples of vertices in array reference form:
 
@@ -105,9 +112,6 @@ Examples of vertices in array reference form:
   [0,1]   2 vertices and 1 edge, weight 1.
   [1,0,9] 3 vertices and 2 edges having, weight 10.
   [1,2,3] 3 vertices and 3 edges having, weight 6.
-
-Multiple attributes may be applied to a graph, thereby layering and increasing
-the overall dimension.
 
 =cut
 
@@ -129,9 +133,11 @@ sub populate {
     }
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
-            if ( $data->{$vertex}{title} ) {
-                my $title = delete $data->{$vertex}{title};
-                $self->set_vertex_attribute($vertex, 'title', $title);
+            if ( $data->{$vertex}{attributes} ) {
+                my $attributes = delete $data->{$vertex}{attributes};
+                for my $attr ( keys %$attributes ) {
+                    $self->set_vertex_attribute($vertex, $attr, $attributes->{$attr});
+                }
             }
             $self->_from_hash( $vertex, $data->{$vertex}, $attr, $format );
         }
