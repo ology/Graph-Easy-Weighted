@@ -9,18 +9,18 @@ my $attr = 'rand';
 my $gw = Graph::Easy::Weighted->new();
 $gw->populate(
     {
-        W => { X => rand, Z => rand }, # Vertex W with 2 edges, weight 1
-        X => { W => rand, Y => rand }, # Vertex X "    2 "
-        Y => { W => rand, Y => rand }, # Vertex Y "    2 "
-        Z => { W => rand, X => rand }, # Vertex Z "    2 "
+        W => { attributes => { title => 'w' }, X => rand, Z => rand },
+        X => { attributes => { title => 'x' }, W => rand, Y => rand },
+        Y => { attributes => { title => 'y' }, W => rand, Y => rand },
+        Z => { attributes => { title => 'z' }, W => rand, X => rand },
     },
     $attr,
     '%0.2f'
 );
 
 for my $vertex ( $gw->vertices ) {
-    printf "vertex: %s %s=%s\n",
-        $vertex->name, $attr, $gw->get_cost($vertex, $attr);
+    printf "%s vertex: %s %s=%s\n",
+        $vertex->title, $vertex->name, $attr, $gw->get_cost($vertex, $attr);
     for my $edge ( $gw->edges ) {
         next if $edge->from->name ne $vertex->name;
         printf "\tedge to: %s %s=%s\n",
