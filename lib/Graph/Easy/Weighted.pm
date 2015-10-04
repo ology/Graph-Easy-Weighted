@@ -156,7 +156,7 @@ sub _from_array {
         next unless $w; # TODO Skip zero weight nodes if requested?
 
         my $edge = Graph::Easy::Edge->new();
-        $edge->set_attributes({ "x-$attr" => $w });
+        $edge->set_attributes({ label => $w, "x-$attr" => $w });
 
         $self->add_edge($vertex, $n, $edge);
 
@@ -175,7 +175,7 @@ sub _from_hash {
         my $w = $neighbors->{$n}; # Weight of the edge to the neighbor.
 
         my $edge = Graph::Easy::Edge->new();
-        $edge->set_attributes({ "x-$attr" => $w });
+        $edge->set_attributes({ label => $w, "x-$attr" => $w });
 
         $self->add_edge($vertex, $n, $edge);
 
