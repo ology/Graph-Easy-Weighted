@@ -1,6 +1,7 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+    - Handle an sprintf() format for the edge label.
 
 0.03  2015-10-03
     - Remove the unneeded new() method.
