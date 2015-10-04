@@ -1,4 +1,5 @@
-Revision history for Graph-Weighted:
+Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
-    - Copied from the Graph::Weighted distribution.
+    - Copied from the Graph::Easy::Weighted distribution.
+    - Tweaked for Graph::Easy usage.
