@@ -1,5 +1,8 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+    - Set edge labels for the given attribute.
+
+0.01  2015-10-03
     - Copied from the Graph::Easy::Weighted distribution.
     - Tweaked for Graph::Easy usage.
