@@ -1,6 +1,8 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+
+0.04  2015-10-03
     - Handle an sprintf() format for the edge label.
 
 0.03  2015-10-03
