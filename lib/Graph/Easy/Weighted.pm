@@ -73,7 +73,7 @@ as documented, but with the addition of custom weighting.
 
 =head2 new()
 
-  my $gw = Graph::Easy::Weighted->new;
+  $gw = Graph::Easy::Weighted->new;
 
 Return a new C<Graph::Easy::Weighted> object.
 
@@ -222,8 +222,8 @@ sub get_cost {
 
 =head2 vertex_span()
 
- my ($lightest, $heaviest) = $gw->vertex_span();
- my ($lightest, $heaviest) = $gw->vertex_span($attr);
+ ($lightest, $heaviest) = $gw->vertex_span();
+ ($lightest, $heaviest) = $gw->vertex_span($attr);
 
 Return the lightest and heaviest vertices.
 
@@ -259,8 +259,8 @@ sub vertex_span {
 
 =head2 edge_span()
 
- my ($lightest, $heaviest) = $gw->edge_span();
- my ($lightest, $heaviest) = $gw->edge_span($attr);
+ ($lightest, $heaviest) = $gw->edge_span();
+ ($lightest, $heaviest) = $gw->edge_span($attr);
 
 Return the lightest to heaviest edges.
 
@@ -298,8 +298,8 @@ sub edge_span {
 
 =head2 path_cost()
 
- my $weight = $gw->path_cost(\@named_vertices);
- my $weight = $gw->path_cost(\@named_vertices, $attr);
+ $c = $gw->path_cost(\@named_vertices);
+ $c = $gw->path_cost(\@named_vertices, $attr);
 
 Return the summed weight (or given cost attribute) of the path edges.
 
