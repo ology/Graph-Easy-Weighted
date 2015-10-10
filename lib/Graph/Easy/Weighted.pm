@@ -2,7 +2,7 @@ package Graph::Easy::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.05';
+our $VERSION = '0.0501';
 
 use warnings;
 use strict;
@@ -19,11 +19,11 @@ Readonly my $WEIGHT => 'weight';
 
  my $gw = Graph::Easy::Weighted->new();
  $gw->populate(
-    [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 2 edges of weight 3
-      [ 1, 0, 3, 0, 0 ], #    "   1      2 "               4
-      [ 2, 3, 0, 0, 0 ], #    "   2      2 "               5
-      [ 0, 0, 1, 0, 0 ], #    "   3      1 "               1
-      [ 0, 0, 0, 0, 0 ], #    "   4      0 "               0
+    [ [0,1,2,0,0], # Vertex 0 with 2 edges of weight 3
+      [1,0,3,0,0], #    "   1      2 "               4
+      [2,3,0,0,0], #    "   2      2 "               5
+      [0,0,1,0,0], #    "   3      1 "               1
+      [0,0,0,0,0], #    "   4      0 "               0
     ]
  );
  for my $vertex ( $gw->vertices ) {
@@ -45,10 +45,10 @@ Readonly my $WEIGHT => 'weight';
  $gw = Graph::Easy::Weighted->new();
  $gw->populate(
     {
-        0 => { attributes => { title => 'A' }, 1 => 0.4, 3 => 0.6 },
-        1 => { attributes => { title => 'B' }, 0 => 0.3, 2 => 0.7 },
-        2 => { attributes => { title => 'C' }, 0 => 0.5, 2 => 0.5 },
-        3 => { attributes => { title => 'D' }, 0 => 0.2, 1 => 0.8 },
+        0 => { attributes => { title => 'A' }, 1=>0.4, 3=>0.6 },
+        1 => { attributes => { title => 'B' }, 0=>0.3, 2=>0.7 },
+        2 => { attributes => { title => 'C' }, 0=>0.5, 2=>0.5 },
+        3 => { attributes => { title => 'D' }, 0=>0.2, 1=>0.8 },
     },
     $attr,
     '%0.2f'
@@ -303,6 +303,9 @@ sub edge_span {
 
 Return the summed weight (or given cost attribute) of the path edges.
 
+For shortest paths and minimum spanning trees, please see
+L<Graph::Weighted/EXAMPLES>.
+
 =cut
 
 sub path_cost {
@@ -324,8 +327,10 @@ __END__
 
 =head1 SEE ALSO
 
-L<Graph::Easy>
+L<Graph::Easy>, the parent of this module
 
-The F<eg/*> and F<t/*> file sources.
+L<Graph::Weighted>, the sibling
+
+The F<eg/*> and F<t/*> file sources
 
 =cut
