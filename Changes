@@ -1,6 +1,7 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+    - Improved documentation.
 
 0.05  2015-10-04
     - Enable generic node attribute setting.
