@@ -2,7 +2,7 @@ package Graph::Easy::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.0501';
+our $VERSION = '0.06';
 
 use warnings;
 use strict;
@@ -91,8 +91,8 @@ Please see L<Graph::Easy/new()> for the possible constructor arguments.
 
 Populate a graph with weighted nodes.
 
-The data can be an arrayref of numeric vectors, a C<Math::MatrixReal> object, or
-a hashref of numeric edge values.
+The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
+C<Math::MatrixReal> object, or a hashref of numeric edge values.
 
 Data given as a hash reference may contain node attributes as shown in the
 SYNOPSIS.  See L<Graph::Easy::Manual> for the available attributes.
@@ -131,6 +131,15 @@ sub populate {
             $vertex++;
         }
     }
+    elsif ($data_ref eq 'Math::MatrixReal') {
+        my $vertex = 0;
+        for my $neighbors (@{ $data->[0] }) {
+            $self->_from_array( $vertex, $neighbors, $attr, $format );
+            $vertex++;
+        }
+    }
+    elsif ($data_ref eq 'HASH') {
+        for my $vertex (keys %$data) {
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
             if ( $data->{$vertex}{attributes} ) {
