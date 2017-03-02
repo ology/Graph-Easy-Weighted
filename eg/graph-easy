@@ -1,4 +1,7 @@
 #!/usr/bin/env perl
+#
+# This is how you have to set weights by hand, with Graph::Easy.
+#
 use strict;
 use warnings;
 
