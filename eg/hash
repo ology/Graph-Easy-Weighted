@@ -6,7 +6,9 @@ use warnings;
 use Graph::Easy::Weighted;
 
 my $attr = 'rand';
+
 my $gw = Graph::Easy::Weighted->new();
+
 $gw->populate(
     {
         W => { attributes => { title => 'w' }, X => rand, Z => rand },
@@ -18,14 +20,6 @@ $gw->populate(
     '%0.2f'
 );
 
-for my $vertex ( $gw->vertices ) {
-    printf "%s vertex: %s %s=%s\n",
-        $vertex->title, $vertex->name, $attr, $gw->get_cost($vertex, $attr);
-    for my $edge ( $gw->edges ) {
-        next if $edge->from->name ne $vertex->name;
-        printf "\tedge to: %s %s=%s\n",
-            $edge->to->name, $attr, $gw->get_cost($edge, $attr);
-    }
-}
+$gw->dump();
 
 print $gw->as_ascii();

@@ -2,7 +2,7 @@ package Graph::Easy::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use warnings;
 use strict;
@@ -26,15 +26,7 @@ Readonly my $WEIGHT => 'weight';
       [0,0,0,0,0], #    "   4      0 "               0
     ]
  );
- for my $vertex ( $gw->vertices ) {
-    printf "vertex: %s weight=%.2f\n",
-        $vertex->name, $gw->get_cost($vertex);
-    for my $edge ( $gw->edges ) {
-        next if $edge->from->name ne $vertex->name;
-        printf "\tedge to: %s weight=%.2f\n",
-            $edge->to->name, $gw->get_cost($edge);
-    }
- }
+ $gw->dump();
 
  my ($lightest, $heaviest) = $gw->vertex_span();
  ($lightest, $heaviest) = $gw->edge_span();
@@ -53,15 +45,7 @@ Readonly my $WEIGHT => 'weight';
     $attr,
     '%0.2f'
  );
- for my $vertex ( $gw->vertices ) {
-    printf "%s vertex: %s %s=%s\n",
-        $vertex->title, $vertex->name, $attr, $gw->get_cost($vertex, $attr);
-    for my $edge ( $gw->edges ) {
-        next if $edge->from->name ne $vertex->name;
-        printf "\tedge to: %s %s=%s\n",
-            $edge->to->name, $attr, $gw->get_cost($edge, $attr);
-    }
- }
+ $gw->dump();
 
 =head1 DESCRIPTION
 
@@ -138,8 +122,6 @@ sub populate {
             $vertex++;
         }
     }
-    elsif ($data_ref eq 'HASH') {
-        for my $vertex (keys %$data) {
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
             if ( $data->{$vertex}{attributes} ) {
@@ -329,6 +311,36 @@ sub path_cost {
     }
 
     return $path_cost;
+}
+
+
+=head2 dump()
+
+  $gw->dump()
+  $gw->dump($attr)
+
+Print out the graph showing vertices, edges and costs.
+
+=cut
+
+sub dump {
+    my $self = shift;
+    my $attr = shift || 'weight';
+
+    for my $vertex ( $self->vertices ) {
+        printf "%s vertex: %s %s=%s\n",
+            $vertex->title,
+            $vertex->name,
+            $attr,
+            $self->get_cost($vertex, $attr);
+        for my $edge ( $self->edges ) {
+            next if $edge->from->name ne $vertex->name;
+            printf "\tedge to: %s %s=%s\n",
+                $edge->to->name,
+                $attr,
+                $self->get_cost($edge, $attr);
+        }
+    }
 }
 
 1;

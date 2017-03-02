@@ -1,6 +1,9 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+    - Add and use the dump() function.
+
+0.06  2015-10-14
     - Add support for population with Math::MatrixReal objects.
 
 0.0501 2015-10-09
