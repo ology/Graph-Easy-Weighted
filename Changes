@@ -1,6 +1,8 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+
+0.07  2017-03-01
     - Add and use the dump() function.
 
 0.06  2015-10-14
