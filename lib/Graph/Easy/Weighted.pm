@@ -2,7 +2,7 @@ package Graph::Easy::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.07';
+our $VERSION = '0.0701';
 
 use warnings;
 use strict;
@@ -10,8 +10,8 @@ use strict;
 use parent qw(Graph::Easy);
 
 use Carp qw( croak );
-use Readonly;
-Readonly my $WEIGHT => 'weight';
+
+use constant WEIGHT => 'weight';
 
 =head1 SYNOPSIS
 
@@ -103,7 +103,7 @@ sub populate {
     my ($self, $data, $attr, $format) = @_;
 
     # Set the default attribute.
-    $attr ||= $WEIGHT;
+    $attr ||= WEIGHT;
 
     # What type of data are we given?
     my $data_ref = ref $data;
@@ -202,7 +202,7 @@ sub get_cost {
     my ($self, $v, $attr) = @_;
     croak 'ERROR: No vertex given to get_cost()' unless defined $v;
 
-    $attr ||= $WEIGHT;
+    $attr ||= WEIGHT;
 
     if ( ref $v eq 'Graph::Easy::Edge' ) {
         return $v->get_custom_attributes->{"x-$attr"} || 0;
