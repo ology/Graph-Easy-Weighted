@@ -1,6 +1,8 @@
 Revision history for Graph-Easy-Weighted:
 
 {{$NEXT}}
+
+0.0701 2022-10-21
     - Avoid implicit imports.
     - Use constant not Readonly.
 
